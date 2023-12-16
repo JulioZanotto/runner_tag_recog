@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
-import cv2
 from glob import glob
 import streamlit as st
 from PIL import Image
+import cv2
 
 from ultralytics import YOLO
 from paddleocr import PaddleOCR
