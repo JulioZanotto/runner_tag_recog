@@ -1,19 +1,17 @@
 import pandas as pd
 import numpy as np
 import cv2
-import torch
 from glob import glob
 import streamlit as st
 from PIL import Image
 
-from paddleocr import PaddleOCR, draw_ocr
-import os
-import matplotlib.pyplot as plt
+from ultralytics import YOLO
+from paddleocr import PaddleOCR
 
 PLATE_NUM = 2
-# Carrega o modelo do Yolov7
-model = torch.hub.load('WongKinYiu/yolov7', 'custom', path_or_model='../best_updated.pt')
-model.conf = 0.5
+
+# Carrega o modelo do Yolov8
+model = YOLO('../best_v8.pt')  # pretrained YOLOv8n model
 
 # OCR from LearnOpenCV
 ocr = PaddleOCR(use_angle_cls=True, lang='en')
@@ -53,15 +51,14 @@ def check_list(txts):
 
 def return_detections(img_p):
     # Passa pelo modelo
-    out = model(img_p, size=800)
-    pand1 = out.pandas().xyxy
-
+    out = model.predict(img_p, imgsz=800, conf=0.5)
     box_texts = []
     detecs = 0
 
-    for pand in pand1:
-        for line in pand.iterrows():
-            x1, y1, x2, y2, conf, class_, name = line[1]
+    for o in out:
+        boxes = o.boxes
+        for bs in boxes.xyxy:
+            x1, y1, x2, y2 = bs
             detecs +=1
 
             i_res = cv2.resize(img_p[int(y1):int(y2), int(x1):int(x2), :], (240, 240))
