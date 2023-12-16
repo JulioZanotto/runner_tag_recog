@@ -3,7 +3,7 @@ import numpy as np
 from glob import glob
 import streamlit as st
 from PIL import Image
-import cv2
+from cv2 import resize
 
 from ultralytics import YOLO
 from paddleocr import PaddleOCR
@@ -61,7 +61,7 @@ def return_detections(img_p):
             x1, y1, x2, y2 = bs
             detecs +=1
 
-            i_res = cv2.resize(img_p[int(y1):int(y2), int(x1):int(x2), :], (240, 240))
+            i_res = resize(img_p[int(y1):int(y2), int(x1):int(x2), :], (240, 240))
             # i_res = 
             result = ocr.ocr(i_res, cls=True)
             txts = [line[1][0] for line in result]
