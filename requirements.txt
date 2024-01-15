@@ -5,4 +5,3 @@ streamlit
 joblib
 ultralytics
 paddleocr
-opencv-python-headless
