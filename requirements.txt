@@ -1,8 +1,8 @@
-numpy==1.23.5
-scikit-image==0.22.0
-scikit-learn==1.3.1
-streamlit==1.28.2
-joblib==1.3.2
-ultralytics==8.0.202
-paddleocr==2.6.0.1
-opencv-python-headless==4.8.1.78
+numpy
+scikit-image
+scikit-learn
+streamlit
+joblib
+ultralytics
+paddleocr
+opencv-python-headless
